@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: API BDR
+  description: API liée à la base de données relationnelle pour la récupération des information de compte administrateur et enseignant ainsi que les niveaux de formation
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/bdr
+
+paths:
+  /login:
+    post:
+      tags:
+        - Authentification
+      summary: Permet de connecter un utilisateur.
+      description: Un utilisateur est soit un administrateur soit un enseignant.
+      parameters:
+        - in: query
+          name: nom
+          schema:
+            type: boolean
+          description: Precise si le nom doit être présent dans le corp de la réponse
+        - in: query
+          name: prenom
+          schema:
+            type: boolean
+          description: Precise si le prenom doit être présent dans le corp de la réponse
+        - in: query
+          name: identifiant
+          schema:
+            type: boolean
+          description: Precise si l'identifiant doit être présent dans le corp de la réponse
+        - in: query
+          name: nom_etablisement
+          schema:
+            type: boolean
+          description: Precise si le nom de l'etablissement auquel il est rattaché doit être présent dans le corp de la réponse (seul pour les enseignants)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pseudo:
+                  type: string
+                motDePasse:
+                  type: string
+      responses:
+        '201': # status code
+          description: Les information d'un utilisateur ou tout simple la chaine de caractère OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Enseignant'
+                  - $ref: '#/components/schemas/Administrateur'
+                  - type: string
+
+components:
+  schemas:
+    Enseignant:
+      type: object
+      properties:
+        identifiant:
+          type: integer
+        nom:
+          type: string
+        prenom:
+          type: string
+        nom_etablisement:
+          type: string
+    Administrateur:
+      type: object
+      properties:
+        identifiant:
+          type: integer
+        nom:
+          type: string
+        prenom:
+          type: string
