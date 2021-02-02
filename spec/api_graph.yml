@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: API GRAPH
+  description: API liée à la base de données graph pour la gestions des modules de formation, les unités pédagogiques d'un enseigant
+  version: 1.0.0
+servers:
+  - url: http://localhost:8001/graph
+
+paths:
+  /unitePedagogique:
+    post:
+      tags:
+        - Unité Pédagogiques
+      summary: Permet d'inserer une nouvelle unité pédagogique.
+      description: Ce point d'entrée est accèssible seulement via l'API Centrale.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url_resource:
+                  type: string
+                  nullable: false
+                chaine_descriptive:
+                  description: On doit avoir au moins une chaine descriptive
+                  type: array
+                  items:
+                    type: string
+                  nullable: false
+                nom:
+                  type: string
+                  nullable: false
+                nom_module_formation:
+                  type: string
+                  nullable: false
+                identifiant_unite_pedagogique_suivant:
+                  type: string
+                  nullable: true
+      responses:
+        '201': # status code
+          description: Les informations créer en base de données
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unite_pedagogique:
+                    $ref: '#/components/schemas/UnitePedagogique'
+                  chaine_descriptive:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChaineDescriptive'
+components:
+  schemas:
+    UnitePedagogique:
+      type: object
+      properties:
+        identifiant_unite_pedagogique:
+          type: string
+        identifiant_enseignant:
+          type: number
+        nom:
+          type: string
+        url_resource:
+          type: string
+    RelationSuccession:
+      type: object
+      properties:
+        identifiant_unite_pedagogique_suivant:
+          type: string
+        nom_module_formation:
+          type: string
+    ChaineDescriptive:
+      type: object
+      properties:
+        nom:
+          type: string
+    RelationDescription:
+      type: string
