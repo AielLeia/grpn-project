@@ -11,14 +11,18 @@ const RelationCommencePar = require('./relations/RelationCommencePar');
 const RelationAssociation = require('./relations/RelationAssociation');
 
 module.exports = {
-  ChaineDescriptive,
-  RelationDescription,
-  RelationSuccession,
-  UnitePedagogique,
-  ModuleFormation,
-  NiveauFormation,
-  Enseignant,
-  RelationAssociation,
-  RelationCommencePar,
-  RelationCreation,
+  noeud: {
+    ChaineDescriptive,
+    UnitePedagogique,
+    ModuleFormation,
+    NiveauFormation,
+    Enseignant,
+  },
+  relation: {
+    RelationDescription,
+    RelationSuccession,
+    RelationAssociation,
+    RelationCommencePar,
+    RelationCreation,
+  },
 };
