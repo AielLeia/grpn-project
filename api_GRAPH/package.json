@@ -1,0 +1,20 @@
+{
+  "name": "api_graph",
+  "version": "1.0.0",
+  "description": "Serveur permettant la connexion de la base de donnée neo4j",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Ismaël MOHAMED BOUH",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "neode": "^0.4.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
