@@ -1,9 +1,9 @@
 module.exports = {
-  identifiant_unite_pedagogique_suivant: {
-    type: 'uuid',
+  identifiant_niveau_formation: {
+    type: 'number',
     empty: false,
   },
-  nom_module_formation: {
+  nom: {
     type: 'string',
     empty: false,
   },

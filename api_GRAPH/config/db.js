@@ -4,6 +4,12 @@ const {
   RelationDescription,
   RelationSuccession,
   UnitePedagogique,
+  Enseignant,
+  ModuleFormation,
+  NiveauFormation,
+  RelationAssociation,
+  RelationCommencePar,
+  RelationCreation,
 } = require('../models');
 
 const neode = Neode.fromEnv();
