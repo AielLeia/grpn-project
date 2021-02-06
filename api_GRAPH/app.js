@@ -38,16 +38,12 @@ app.get(
   '/',
   asyncHandler(async (req, res) => {
     try {
-      const result = await neodeInstance
-        .query()
-        .match('mf', 'ModuleFormation')
-        .relationship('ASSOCIE', 'out')
-        .to('nf', 'NiveauFormation')
-        .return('mf', 'nf')
-        .execute();
-      // const result = await neodeInstance.query(query, params);
-      res.json({ result: result.records });
+      const result = await (
+        await neodeInstance.all('ModuleFormation')
+      ).toJson();
+      res.json(result);
     } catch (e) {
+      res.status(404);
       res.json({ message: e });
     }
   })

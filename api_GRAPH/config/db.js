@@ -31,10 +31,13 @@ neode
   .model('ModuleFormation')
   .relationship(
     'associe',
+    'relationships',
     'ASSOCIE',
-    'out',
+    'direction_both',
     'NiveauFormation',
-    RelationAssociation
+    RelationAssociation,
+    true,
+    true
   );
 
 module.exports = neode;
