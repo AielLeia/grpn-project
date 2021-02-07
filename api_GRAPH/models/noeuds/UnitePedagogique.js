@@ -1,4 +1,9 @@
 module.exports = {
+  id: {
+    type: 'uuid',
+    empty: false,
+    primary: true,
+  },
   identifiant_unite_pedagogique: {
     type: 'number',
     empty: false,
