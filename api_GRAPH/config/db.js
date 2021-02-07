@@ -33,7 +33,7 @@ neode
     'associe',
     'relationships',
     'ASSOCIE',
-    'out',
+    'direction_out',
     'NiveauFormation',
     RelationAssociation,
     true,
@@ -47,7 +47,7 @@ neode
     'commence_par',
     'relationship',
     'COMMENCE_PAR',
-    'out',
+    'direction_out',
     'UnitePedagogique',
     RelationCommencePar,
     true,
@@ -61,7 +61,7 @@ neode
     'suis',
     'relationship',
     'SUIS',
-    'out',
+    'direction_out',
     'UnitePedagogique',
     RelationSuccession,
     true,
@@ -70,12 +70,12 @@ neode
 
 // (:Enseignant) - [:A_CREER] -> (:UnitePedagogique)
 neode
-  .model('UnitePedagogique')
+  .model('Enseignant')
   .relationship(
     'a_creer',
     'relationships',
     'A_CREER',
-    'out',
+    'direction_out',
     'UnitePedagogique',
     RelationCreation,
     true,
@@ -89,7 +89,7 @@ neode
     'decrit',
     'relationships',
     'DECRIT',
-    'out',
+    'direction_out',
     'UnitePedagogique',
     RelationDescription,
     true,
