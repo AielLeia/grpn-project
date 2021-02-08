@@ -26,18 +26,16 @@ neode.with({
   UnitePedagogique,
 });
 
-// (:ModuleFormation) - [:ASSOCIE] -> (:NiveauFormation)
+// (:NiveauFormation)  - [:ASSOCIE] -> (:ModuleFormation)
 neode
-  .model('ModuleFormation')
+  .model('NiveauFormation')
   .relationship(
     'associe',
     'relationships',
     'ASSOCIE',
     'direction_out',
-    'NiveauFormation',
-    RelationAssociation,
-    true,
-    true
+    'ModuleFormation',
+    RelationAssociation
   );
 
 // (:ModuleFormation) - [:COMMENCE_PAR] -> (:UnitePedagogique)
@@ -49,9 +47,7 @@ neode
     'COMMENCE_PAR',
     'direction_out',
     'UnitePedagogique',
-    RelationCommencePar,
-    true,
-    true
+    RelationCommencePar
   );
 
 // (:UnitePedagogique) - [:SUIS] -> (:UnitePedagogique)
@@ -63,9 +59,7 @@ neode
     'SUIS',
     'direction_out',
     'UnitePedagogique',
-    RelationSuccession,
-    true,
-    true
+    RelationSuccession
   );
 
 // (:Enseignant) - [:A_CREER] -> (:UnitePedagogique)
@@ -77,9 +71,7 @@ neode
     'A_CREER',
     'direction_out',
     'UnitePedagogique',
-    RelationCreation,
-    true,
-    true
+    RelationCreation
   );
 
 // (:ChaineDescriptive) - [:DECRIT] -> (:UnitePedagogique)
@@ -91,9 +83,7 @@ neode
     'DECRIT',
     'direction_out',
     'UnitePedagogique',
-    RelationDescription,
-    true,
-    true
+    RelationDescription
   );
 
 module.exports = neode;

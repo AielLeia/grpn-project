@@ -1,53 +1,12 @@
 require('dotenv');
 const express = require('express');
-const asyncHandler = require('express-async-handler');
-const neodeInstance = require('./config/db');
+const { moduleFormationRoute } = require('./routes');
 
 const app = express();
 
 app.use(express.json());
 
-app.post(
-  '/',
-  asyncHandler(async (req, res) => {
-    const { nomModuleFormation, nomNiveauFormation } = req.body;
-    try {
-      await neodeInstance.batch([
-        {
-          query: 'CREATE (:ModuleFormation {nom: $nomModuleFormation})',
-          params: { nomModuleFormation },
-        },
-        {
-          query: 'CREATE (:NiveauFormation {nom: $nomNiveauFormation})',
-          params: { nomNiveauFormation },
-        },
-        {
-          query:
-            'MATCH (mf:ModuleFormation {nom: $nomModuleFormation}), (nf:NiveauFormation {nom: $nomNiveauFormation}) CREATE (mf)-[:ASSOCIE]->(nf)',
-          params: { nomModuleFormation, nomNiveauFormation },
-        },
-      ]);
-      res.json({ message: 'OK!' });
-    } catch (e) {
-      res.json({ message: e });
-    }
-  })
-);
-
-app.get(
-  '/',
-  asyncHandler(async (req, res) => {
-    try {
-      const result = await (
-        await neodeInstance.all('ModuleFormation')
-      ).toJson();
-      res.json(result);
-    } catch (e) {
-      res.status(404);
-      res.json({ message: e });
-    }
-  })
-);
+app.use('/api-graph/module-formation', moduleFormationRoute);
 
 const port = process.env.APP_PORT || 5000;
 app.listen(port, () =>

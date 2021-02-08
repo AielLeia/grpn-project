@@ -208,7 +208,7 @@ async function processRelation() {
         .first('identifiant_module_formation', mf.identifiant_module_formation);
       const neo4jNf = await neode.model('NiveauFormation').all();
       for (const neo4jnf of neo4jNf) {
-        const result = await neo4jMf.relateTo(neo4jnf, 'associe');
+        const result = await neo4jnf.relateTo(neo4jMf, 'associe');
         console.log(
           `\t${result.startNode().get('nom')} -> ${result.endNode().get('nom')}`
             .bold.green
