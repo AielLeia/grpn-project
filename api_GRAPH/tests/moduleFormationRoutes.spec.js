@@ -57,17 +57,24 @@ describe("Point d'entrée des modules de fomation", () => {
           identifiant_module_formation: 4,
         },
         niveauFormation: {
-          identifiant_niveau_formation: 4,
           nom: 'Terminal',
         },
       });
     expect(res.statusCode).toEqual(201);
-    expect(res.body).toContainObject({
-      nom: 'Histoire-Géographie',
-      identifiant_module_formation: 4,
+    expect(res.body).toMatchObject({
+      moduleFormation: {
+        nom: 'Histoire-Géographie',
+        identifiant_module_formation: 4,
+      },
     });
-    expect(res.body).toContainObject({
-      nom: 'Terminal',
+    expect(res.body).toMatchObject({
+      niveauFormation: { nom: 'Terminal' },
+    });
+    expect(res.body).toMatchObject({
+      relation: {
+        from: 'Terminal',
+        to: 'Histoire-Géographie',
+      },
     });
   });
 });

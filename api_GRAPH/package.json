@@ -4,7 +4,7 @@
   "description": "Serveur permettant la connexion de la base de donnée neo4j",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "npm run seeder:dev; nodemon server.js",
     "seeder": "node seeder.js",
     "seeder:dev": "cross-env NODE_ENV=developpement node seeder.js",
     "test": "cross-env NODE_ENV=test jest",

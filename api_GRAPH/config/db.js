@@ -16,6 +16,9 @@ const {
   },
 } = require('../models');
 
+/**
+ * @type {Neode}
+ */
 let neode;
 
 if (process.env.NODE_ENV === 'test') {

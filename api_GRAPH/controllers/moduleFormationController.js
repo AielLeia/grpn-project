@@ -23,13 +23,34 @@ const addModuleFormation = asyncHandler(async (req, res) => {
     niveauFormation: { nom: nomNiveauFormation },
   } = req.body;
   try {
+    const niveauFormationFromNeo4j = await neode
+      .model('NiveauFormation')
+      .first('nom', nomNiveauFormation);
+    if (!niveauFormationFromNeo4j) {
+      throw new Error('Niveau de formation Inconnue');
+    }
     const moduleFormationCreated = await neode
       .model('ModuleFormation')
       .create({ nom: nomModuleFormation, identifiant_module_formation });
-    const 
+    const resultRelation = await moduleFormationCreated.relateTo(
+      niveauFormationFromNeo4j,
+      'associe'
+    );
+    res.status(201).json({
+      niveauFormation: {
+        ...(await niveauFormationFromNeo4j.toJson()),
+      },
+      moduleFormation: {
+        ...(await moduleFormationCreated.toJson()),
+      },
+      relation: {
+        to: resultRelation.startNode().get('nom'),
+        from: resultRelation.endNode().get('nom'),
+      },
+    });
   } catch (e) {
-    res.status(404);
-    throw new Error('Impossible de récupèrer les modules de formations');
+    res.status(500);
+    throw new Error("Impossible d'inserer un nouveau module de formation");
   }
 });
 
