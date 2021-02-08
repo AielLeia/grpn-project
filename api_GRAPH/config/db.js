@@ -19,7 +19,13 @@ const {
 let neode;
 
 if (process.env.NODE_ENV === 'test') {
-  neode = new Neode('bolt://localhost:7687', 'neo4j', 'dbtest12345');
+  neode = new Neode(
+    'bolt://localhost:7687',
+    'neo4j',
+    'test12345',
+    false,
+    'projetsitest'
+  );
 } else {
   neode = Neode.fromEnv();
 }
