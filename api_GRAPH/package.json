@@ -2,16 +2,17 @@
   "name": "api_graph",
   "version": "1.0.0",
   "description": "Serveur permettant la connexion de la base de donnée neo4j",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon server.js",
     "seeder": "node seeder.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "test": "cross-env NODE_ENV=test jest",
     "pretest": "cross-env NODE_ENV=test npm run seeder"
   },
   "author": "Ismaël MOHAMED BOUH",
   "license": "MIT",
   "dependencies": {
+    "@types/jest": "^26.0.20",
     "colors": "^1.4.0",
     "cross-env": "^7.0.3",
     "dotenv": "^4.0.0",
