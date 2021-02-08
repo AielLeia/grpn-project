@@ -4,7 +4,8 @@
   "description": "Serveur permettant la connexion de la base de donnée neo4j",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test": "jest"
   },
   "author": "Ismaël MOHAMED BOUH",
   "license": "MIT",
@@ -13,9 +14,17 @@
     "dotenv": "^4.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
-    "neode": "^0.4.7"
+    "jest": "^26.6.3",
+    "neode": "^0.4.7",
+    "supertest": "^6.1.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
