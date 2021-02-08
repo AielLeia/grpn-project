@@ -1,6 +1,4 @@
 require('colors');
-const { Builder } = require('neode');
-const utils = require('util');
 const neode = require('./config/db');
 const {
   noeud: {
@@ -73,22 +71,7 @@ const chaineDescriptives = [
     nom: 'Maths',
   },
   {
-    nom: 'Algorithmique',
-  },
-  {
     nom: 'Physique',
-  },
-  {
-    nom: 'Produit Factoriel',
-  },
-  {
-    nom: 'Champs Magnetiques',
-  },
-  {
-    nom: 'Introduction Rélativiter',
-  },
-  {
-    nom: 'Méthode de factorisation',
   },
   {
     nom: 'Svt',
@@ -430,6 +413,85 @@ async function processRelation() {
     }
   }
 
+  async function associationBetweenChaineDescriptivetAndUnitePedagogique() {
+    const neo4jMathsChaineDescription = await neode
+      .model('ChaineDescriptive')
+      .first({ nom: 'Maths' });
+    const neo4jSvtChaineDescription = await neode
+      .model('ChaineDescriptive')
+      .first({ nom: 'Svt' });
+    const neo4jPhyqiueChaineDescription = await neode
+      .model('ChaineDescriptive')
+      .first({ nom: 'Physique' });
+
+    const { records: physique } = await neode.cypher(
+      'MATCH (mf:ModuleFormation) - [:COMMENCE_PAR] -> (nn:UnitePedagogique) - [:SUIS*] -> (n:UnitePedagogique) WHERE mf.nom = "Physique" RETURN nn,n',
+      {}
+    );
+    const { records: maths } = await neode.cypher(
+      'MATCH (mf:ModuleFormation) - [:COMMENCE_PAR] -> (nn:UnitePedagogique) - [:SUIS*] -> (n:UnitePedagogique) WHERE mf.nom = "Maths" RETURN nn,n',
+      {}
+    );
+    const { records: svt } = await neode.cypher(
+      'MATCH (mf:ModuleFormation) - [:COMMENCE_PAR] -> (nn:UnitePedagogique) - [:SUIS*] -> (n:UnitePedagogique) WHERE mf.nom = "Svt" RETURN nn,n',
+      {}
+    );
+
+    console.log('\tPhysique: '.bold.cyan);
+    for (const e of physique) {
+      let unitePedagogiqueNeo4j = await neode
+        .model('UnitePedagogique')
+        .first(
+          'identifiant_unite_pedagogique',
+          e.get('n').properties.identifiant_unite_pedagogique
+        );
+      await neo4jPhyqiueChaineDescription.relateTo(
+        unitePedagogiqueNeo4j,
+        'decrit'
+      );
+      console.log(
+        `\t\tChaine Descriptive: ${neo4jPhyqiueChaineDescription.get(
+          'nom'
+        )} -> Unité pédagogique: ${unitePedagogiqueNeo4j.get('nom')}`.bold.green
+      );
+    }
+
+    console.log('\tSvt: '.bold.cyan);
+    for (const e of svt) {
+      let unitePedagogiqueNeo4j = await neode
+        .model('UnitePedagogique')
+        .first(
+          'identifiant_unite_pedagogique',
+          e.get('n').properties.identifiant_unite_pedagogique
+        );
+      await neo4jSvtChaineDescription.relateTo(unitePedagogiqueNeo4j, 'decrit');
+      console.log(
+        `\t\tChaine Descriptive: ${neo4jSvtChaineDescription.get(
+          'nom'
+        )} -> Unité pédagogique: ${unitePedagogiqueNeo4j.get('nom')}`.bold.green
+      );
+    }
+
+    console.log('\tMaths: '.bold.cyan);
+    for (const e of maths) {
+      let unitePedagogiqueNeo4j = await neode
+        .model('UnitePedagogique')
+        .first(
+          'identifiant_unite_pedagogique',
+          e.get('n').properties.identifiant_unite_pedagogique
+        );
+      await neo4jMathsChaineDescription.relateTo(
+        unitePedagogiqueNeo4j,
+        'decrit'
+      );
+      console.log(
+        `\t\tChaine Descriptive: ${neo4jMathsChaineDescription.get(
+          'nom'
+        )} -> Unité pédagogique: ${unitePedagogiqueNeo4j.get('nom')}`.bold.green
+      );
+    }
+  }
+
   console.log(
     'Création des rélation entre les modules de formation et les niveaux de formation: '
       .underline.bold.cyan
@@ -449,10 +511,16 @@ async function processRelation() {
   await associationBetweenUnitePedagogiqueAndUnitePedagogique();
 
   console.log(
-    'Création des rélation entres les enseigant et leur unité pédagogique: '
+    'Création des rélation entres les enseigants et leur unité pédagogique: '
       .underline.bold.cyan
   );
   await associationBetweenEnseigantAndUnitePedagogique();
+
+  console.log(
+    'Création des rélation entres les chaines descriptive et les unités pédagogiques: '
+      .underline.bold.cyan
+  );
+  await associationBetweenChaineDescriptivetAndUnitePedagogique();
 }
 
 async function processInsertion() {
