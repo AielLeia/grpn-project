@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "seeder": "node seeder.js",
+    "seeder:dev": "cross-env NODE_ENV=developpement node seeder.js",
     "test": "cross-env NODE_ENV=test jest",
     "pretest": "cross-env NODE_ENV=test npm run seeder"
   },

@@ -32,15 +32,15 @@ neode.with({
   UnitePedagogique,
 });
 
-// (:NiveauFormation)  - [:ASSOCIE] -> (:ModuleFormation)
+// (:ModuleFormation) - [:ASSOCIE] -> (:NiveauFormation)
 neode
-  .model('NiveauFormation')
+  .model('ModuleFormation')
   .relationship(
     'associe',
     'relationships',
     'ASSOCIE',
-    'direction_out',
-    'ModuleFormation',
+    'direction_both',
+    'NiveauFormation',
     RelationAssociation
   );
 
@@ -51,7 +51,7 @@ neode
     'commence_par',
     'relationship',
     'COMMENCE_PAR',
-    'direction_out',
+    'direction_both',
     'UnitePedagogique',
     RelationCommencePar
   );
@@ -63,7 +63,7 @@ neode
     'suis',
     'relationship',
     'SUIS',
-    'direction_out',
+    'direction_both',
     'UnitePedagogique',
     RelationSuccession
   );
@@ -75,7 +75,7 @@ neode
     'a_creer',
     'relationships',
     'A_CREER',
-    'direction_out',
+    'direction_both',
     'UnitePedagogique',
     RelationCreation
   );
@@ -87,7 +87,7 @@ neode
     'decrit',
     'relationships',
     'DECRIT',
-    'direction_out',
+    'direction_both',
     'UnitePedagogique',
     RelationDescription
   );
