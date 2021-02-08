@@ -16,7 +16,13 @@ const {
   },
 } = require('../models');
 
-const neode = Neode.fromEnv();
+let neode;
+
+if (process.env.NODE_ENV === 'test') {
+  neode = new Neode('bolt://localhost:7687', 'neo4j', 'dbtest12345');
+} else {
+  neode = Neode.fromEnv();
+}
 
 neode.with({
   ChaineDescriptive,
