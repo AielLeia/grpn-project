@@ -112,4 +112,17 @@ describe("Point d'entrée des modules de fomation", () => {
       message: 'ERROR_VALIDATION',
     });
   });
+
+  it('DELETE /api-graph/module-formation/4 suppression du module de formation', async () => {
+    const res = await request(app).delete(`${URL}/module-formation/4`);
+    expect(res.statusCode).toEqual(204);
+  });
+
+  it('DELETE /api-graph/module-formation/4 erreur module formation non existant', async () => {
+    const res = await request(app).delete(`${URL}/module-formation/4`);
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toMatchObject({
+      message: 'Module formation non reconnue',
+    });
+  });
 });
