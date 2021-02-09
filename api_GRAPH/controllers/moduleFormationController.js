@@ -61,12 +61,30 @@ const deleteModuleFormation = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Module formation non reconnue');
   }
-  let result = await moduleFormation.delete();
+  await moduleFormation.delete();
   res.status(204).json();
+});
+
+// @desc    Modification d'un module de formation existant
+// @route   PUT /module-formation/:id
+// @access  Private: Enseignant
+const updateModuleFormation = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { nom } = req.body;
+  const moduleFormation = await neode
+    .model('ModuleFormation')
+    .first('identifiant_module_formation', parseInt(id));
+  if (!moduleFormation) {
+    res.status(404);
+    throw new Error('Module formation non reconnue');
+  }
+  let result = await moduleFormation.update({ nom });
+  res.status(200).json({ ...(await result.toJson()) });
 });
 
 module.exports = {
   getAllModuleFormation,
   addModuleFormation,
   deleteModuleFormation,
+  updateModuleFormation,
 };

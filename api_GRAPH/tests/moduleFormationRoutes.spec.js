@@ -125,4 +125,25 @@ describe("Point d'entrée des modules de fomation", () => {
       message: 'Module formation non reconnue',
     });
   });
+
+  it("PUT /api-graph/module-formation/3 mise à jour d'un module de formation", async () => {
+    const res = await request(app)
+      .put(`${URL}/module-formation/3`)
+      .send({ nom: 'Mathématique' });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toMatchObject({
+      nom: 'Mathématique',
+      identifiant_module_formation: 3,
+    });
+  });
+
+  it('PUT /api-graph/module-formation/3 erreur lors de la mise à jour du module de formation', async () => {
+    const res = await request(app)
+      .put(`${URL}/module-formation/5454`)
+      .send({ nom: 'Mathématique' });
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toMatchObject({
+      message: 'Module formation non reconnue',
+    });
+  });
 });
