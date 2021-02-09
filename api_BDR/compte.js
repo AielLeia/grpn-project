@@ -10,6 +10,7 @@ const connection = mysql.createConnection({
   });
 
   connection.connect();
+  
 //autentification d'un compte.
 router.post('/login/Connexion', function (req, res) {
     console.log("post appelé pour l'authentification");
