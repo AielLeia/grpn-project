@@ -77,4 +77,39 @@ describe("Point d'entrée des modules de fomation", () => {
       },
     });
   });
+
+  it('POST /api-graph/module-formation déclange une erreur niveau formation', async () => {
+    const res = await request(app)
+      .post(`${URL}/module-formation`)
+      .send({
+        moduleFormation: {
+          nom: 'Histoire-Géographie',
+          identifiant_module_formation: 4,
+        },
+        niveauFormation: {
+          nom: 'fhdfhdth',
+        },
+      });
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toMatchObject({
+      message: 'Niveau de formation Inconnue',
+    });
+  });
+
+  it('POST /api-graph/module-formation déclange une erreur de création module de formation', async () => {
+    const res = await request(app)
+      .post(`${URL}/module-formation`)
+      .send({
+        moduleFormation: {
+          nom: 'Histoire-Géographie',
+        },
+        niveauFormation: {
+          nom: 'Terminal',
+        },
+      });
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toMatchObject({
+      message: 'ERROR_VALIDATION',
+    });
+  });
 });
