@@ -27,9 +27,13 @@ app.post('/login/Conexion', function(req, res) {
   console.log('post appelé pour l\'authentification');
   console.log(req.body);
     connection.query('SELECT pseudo , motdepasse FROM COMPTE where pseudo = "?" and motdepasse = "?";',[req.body.pseudo,req.body.motdepasse], function (err, result) {
-        if (err) throw err;
+        if (err) {
+            return res.json({'error': true, 'message': 'Error occurred'+err});
+        }
+        else{
         console.log('compte connecté');
         res.json({"Connexion":"ok"});
+    }
     });
 });
 
