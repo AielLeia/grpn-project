@@ -14,6 +14,11 @@ SET time_zone = "+00:00";
 -- Database: `FormationBD`
 --
 
+
+DROP DATABASE IF EXISTS FormationBD;
+CREATE DATABASE IF NOT EXISTS FormationBD;
+USE FormationBD;
+
 -- --------------------------------------------------------
 
 --
