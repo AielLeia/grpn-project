@@ -88,7 +88,25 @@ const updateUnitePedagogique = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Suppression d'une unité pédagogique
+// @route   DELETE /unite-pedagogique/:id
+// @access  Private: Enseignant
+const deleteUnitePedagogique = asyncHandler(async (req, res) => {
+  /**
+    -> Détacher le noeud de sa description
+    -> Détacher le noeud de son enseignant
+
+    -> Si le noeud est un noeud de début:
+      -> Mettre à jour le commencement du module de formation
+    -> Si le noeud est un noeud du millieu:;
+      -> Récupération du noeud parent et mise à jour de celui-çi
+    
+    -> Suppression du module de l'unité pédagogique
+  */
+});
+
 module.exports = {
   getAllUnitePedagogiqueByModuleFormation,
   updateUnitePedagogique,
+  deleteUnitePedagogique,
 };
