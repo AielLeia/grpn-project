@@ -59,4 +59,59 @@ describe("Point d'entrée des modules de fomation", () => {
       message: 'Aucunes unités pédagogiques encore disponible',
     });
   });
+
+  it('PUT /api-graph/unite-pedagogique/:id', async () => {
+    const res = await request(app)
+      .put(`${URL}/unite-pedagogique/1`)
+      .send({
+        unitePedagogique: {
+          nom: 'Chapitre 1 - Introduction à la physique',
+          url: 'http://site-partage-autre.com/chapitre-1.pdf',
+        },
+        chainesDescriptive: ['Physique', 'Introduction'],
+      });
+    expect(res.statusCode).toEqual(200);
+    const { body } = res;
+    expect(body).toMatchObject({
+      nom: 'Chapitre 1 - Introduction à la physique',
+      url_resource: 'http://site-partage-autre.com/chapitre-1.pdf',
+      to: 'Chapitre 1 - Introduction à la physique',
+      from: 'Introduction',
+    });
+  });
+
+  it('PUT /api-graph/unite-pedagogique/:id sur le même objet', async () => {
+    const res = await request(app)
+      .put(`${URL}/unite-pedagogique/1`)
+      .send({
+        unitePedagogique: {
+          nom: 'Chapitre 1 - Introduction à la physique',
+          url: 'http://site-partage-autre.com/chapitre-1.pdf',
+        },
+        chainesDescriptive: ['Physique', 'Introduction'],
+      });
+    expect(res.statusCode).toEqual(200);
+    const { body } = res;
+    expect(body).toMatchObject({
+      nom: 'Chapitre 1 - Introduction à la physique',
+      url_resource: 'http://site-partage-autre.com/chapitre-1.pdf',
+    });
+  });
+
+  it('PUT /api-graph/unite-pedagogique/:id sur une unité pédagogique inesistant', async () => {
+    const res = await request(app)
+      .put(`${URL}/unite-pedagogique/54654654654`)
+      .send({
+        unitePedagogique: {
+          nom: 'Chapitre 1 - Introduction à la physique',
+          url: 'http://site-partage-autre.com/chapitre-1.pdf',
+        },
+        chainesDescriptive: ['Physique', 'Introduction'],
+      });
+    expect(res.statusCode).toEqual(404);
+    const { body } = res;
+    expect(body).toMatchObject({
+      message: 'Unité pédagogique non reconnue',
+    });
+  });
 });

@@ -440,8 +440,23 @@ async function processRelation() {
     );
 
     console.log('\tPhysique: '.bold.cyan);
+    let unitePedagogiqueNeo4j = await neode
+      .model('UnitePedagogique')
+      .first(
+        'identifiant_unite_pedagogique',
+        physique[0].get('nn').properties.identifiant_unite_pedagogique
+      );
+    await neo4jPhyqiueChaineDescription.relateTo(
+      unitePedagogiqueNeo4j,
+      'decrit'
+    );
+    console.log(
+      `\t\tChaine Descriptive: ${neo4jPhyqiueChaineDescription.get(
+        'nom'
+      )} -> Unité pédagogique: ${unitePedagogiqueNeo4j.get('nom')}`.bold.green
+    );
     for (const e of physique) {
-      let unitePedagogiqueNeo4j = await neode
+      unitePedagogiqueNeo4j = await neode
         .model('UnitePedagogique')
         .first(
           'identifiant_unite_pedagogique',
@@ -459,8 +474,20 @@ async function processRelation() {
     }
 
     console.log('\tSvt: '.bold.cyan);
+    unitePedagogiqueNeo4j = await neode
+      .model('UnitePedagogique')
+      .first(
+        'identifiant_unite_pedagogique',
+        svt[0].get('nn').properties.identifiant_unite_pedagogique
+      );
+    await neo4jSvtChaineDescription.relateTo(unitePedagogiqueNeo4j, 'decrit');
+    console.log(
+      `\t\tChaine Descriptive: ${neo4jSvtChaineDescription.get(
+        'nom'
+      )} -> Unité pédagogique: ${unitePedagogiqueNeo4j.get('nom')}`.bold.green
+    );
     for (const e of svt) {
-      let unitePedagogiqueNeo4j = await neode
+      unitePedagogiqueNeo4j = await neode
         .model('UnitePedagogique')
         .first(
           'identifiant_unite_pedagogique',
@@ -475,8 +502,20 @@ async function processRelation() {
     }
 
     console.log('\tMaths: '.bold.cyan);
+    unitePedagogiqueNeo4j = await neode
+      .model('UnitePedagogique')
+      .first(
+        'identifiant_unite_pedagogique',
+        maths[0].get('nn').properties.identifiant_unite_pedagogique
+      );
+    await neo4jMathsChaineDescription.relateTo(unitePedagogiqueNeo4j, 'decrit');
+    console.log(
+      `\t\tChaine Descriptive: ${neo4jMathsChaineDescription.get(
+        'nom'
+      )} -> Unité pédagogique: ${unitePedagogiqueNeo4j.get('nom')}`.bold.green
+    );
     for (const e of maths) {
-      let unitePedagogiqueNeo4j = await neode
+      unitePedagogiqueNeo4j = await neode
         .model('UnitePedagogique')
         .first(
           'identifiant_unite_pedagogique',
