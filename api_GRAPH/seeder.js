@@ -285,7 +285,9 @@ async function processRelation() {
       const nextNeo4j = await neode
         .model('UnitePedagogique')
         .first('identifiant_unite_pedagogique', next);
-      const result = await begin.relateTo(nextNeo4j, 'suis');
+      const result = await begin.relateTo(nextNeo4j, 'suis', {
+        identifiant_unite_pedagogique_suivant: nextNeo4j.get('id'),
+      });
       console.log(
         `\t\t${result.startNode().get('nom')} -> ${result.endNode().get('nom')}`
           .bold.green
