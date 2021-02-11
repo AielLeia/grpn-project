@@ -4,15 +4,27 @@ info:
   description: API liée à la base de données graph pour la gestions des modules de formation, les unités pédagogiques d'un enseigant
   version: 1.0.0
 servers:
-  - url: http://localhost:8001/graph
+  - url: http://localhost:5000/api-graph
 
 paths:
-  /unitePedagogique:
+  /module-formation:
+    get:
+      tags:
+        - Module de formation
+      summary: Récupère tout les modules de formations
+      responses:
+        '200': # status code
+          description: Données récupèrer de la base de données
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleFormation'
     post:
       tags:
-        - Unité Pédagogiques
-      summary: Permet d'inserer une nouvelle unité pédagogique.
-      description: Ce point d'entrée est accèssible seulement via l'API Centrale.
+        - Module de formation
+      summary: Ajouter un module de formation
       requestBody:
         required: true
         content:
@@ -20,62 +32,193 @@ paths:
             schema:
               type: object
               properties:
-                url_resource:
-                  type: string
-                  nullable: false
-                chaine_descriptive:
-                  description: On doit avoir au moins une chaine descriptive
-                  type: array
-                  items:
-                    type: string
-                  nullable: false
-                nom:
-                  type: string
-                  nullable: false
-                nom_module_formation:
-                  type: string
-                  nullable: false
-                identifiant_unite_pedagogique_suivant:
-                  type: string
-                  nullable: true
+                moduleFormation:
+                  type: object
+                  properties:
+                    nom:
+                      type: string
+                    identifiant_module_formation:
+                      type: number
+                niveauFormation:
+                  type: object
+                  properties:
+                    nom:
+                      type: string
       responses:
-        '201': # status code
-          description: Les informations créer en base de données
+        '201':
+          description: Création d'un nouveau module de formation
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  unite_pedagogique:
+                  niveauFormation:
+                    $ref: '#/components/schemas/NiveauFormation'
+                  moduleFormation:
+                    $ref: '#/components/schemas/ModuleFormation'
+                  relation:
+                    type: object
+                    properties:
+                      to:
+                        type: string
+                      from:
+                        type: string
+  /module-formation/:id:
+    delete:
+      tags:
+        - Module de formation
+      summary: Supprime un module de formation sans supprimer les unités pédagogique
+      parameters:
+        - in: query
+          name: id
+          description: L'identifiant du module de formation
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Suppression du module de formation
+    put:
+      tags:
+        - Module de formation
+      summary: Met à jour un module de formation
+      parameters:
+        - in: query
+          name: id
+          description: L'identifiant du module de formation
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nom:
+                  type: string
+      responses:
+        '200':
+          description: Mise à jour du module de formation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleFormation'
+
+  /unite-pedagogique/:id/par-module-pedagogique:
+    get:
+      tags:
+        - Unité Pédagogique
+      summary: Récupération de tout les unités pédagogique par module de formation
+      parameters:
+        - in: query
+          name: id
+          description: L'identifiant du module de formation
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Tout les unités pédagogique organiser par ordre du module de formation en cours
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnitePedagogique'
+  /api-graph/unite-pedagogique/:id:
+    put:
+      tags:
+        - Unité Pédagogique
+      summary: Modification d'une unité pédagogique
+      parameters:
+        - in: query
+          name: id
+          description: L'identifiant de l'unité pédagogique
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                unitePedagogique:
+                  type: object
+                  properties:
+                    nom:
+                      type: string
+                    url:
+                      type: string
+                chainesDescriptive:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Unité pédagogique modifier avec les nouvelles ralation possible
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unitePedagogique:
                     $ref: '#/components/schemas/UnitePedagogique'
-                  chaine_descriptive:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ChaineDescriptive'
+                  relation:
+                    oneOf:
+                      - nullable: true
+                      - type: object
+                        properties:
+                          to:
+                            type: string
+                          from:
+                            type: string
+
 components:
   schemas:
+    ModuleFormation:
+      type: object
+      properties:
+        _id:
+          type: number
+        _labels:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        identifiant_module_formation:
+          type: string
+        nom:
+          type: string
+    NiveauFormation:
+      type: object
+      properties:
+        _id:
+          type: number
+        _labels:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        identifiant_module_formation:
+          type: string
+        nom:
+          type: string
     UnitePedagogique:
       type: object
       properties:
         identifiant_unite_pedagogique:
-          type: string
-        identifiant_enseignant:
           type: number
-        nom:
-          type: string
         url_resource:
           type: string
-    RelationSuccession:
-      type: object
-      properties:
-        identifiant_unite_pedagogique_suivant:
+        id:
           type: string
-        nom_module_formation:
-          type: string
-    ChaineDescriptive:
-      type: object
-      properties:
         nom:
           type: string
-    RelationDescription:
-      type: string
+        identifiant_unite_pedagogique_suivant:
+          type: string
