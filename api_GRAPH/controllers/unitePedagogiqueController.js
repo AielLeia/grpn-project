@@ -93,7 +93,7 @@ const updateUnitePedagogique = asyncHandler(async (req, res) => {
 // @access  Private: Enseignant
 const deleteUnitePedagogique = asyncHandler(async (req, res) => {
   /**
-    -> Détacher le noeud de sa description
+    -> Détacher le noeud de sa description ou ses description
     -> Détacher le noeud de son enseignant
 
     -> Si le noeud est un noeud de début:
