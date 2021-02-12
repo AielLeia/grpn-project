@@ -37,7 +37,7 @@ router.post('/login/Connexion', function (req, res) {
       "SELECT * FROM  Compte where pseudo = '" + req.params.pseudo + "'",
       function (error, results, fields) {
         if (error) throw error;
-        res.send(results);
+        res.json(results[0]);
       }
     );
   });
