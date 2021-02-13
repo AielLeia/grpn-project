@@ -1,7 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { create } = require('../config/db');
 const neode = require('../config/db');
-const ChaineDescriptive = require('../models/noeuds/ChaineDescriptive');
 
 // @desc    Recupère tout les unités pédagogique par module de formation et dans l'ordre
 // @route   GET /unite-pedagogique/:id/par-module-pedagogique
@@ -105,8 +103,24 @@ const deleteUnitePedagogique = asyncHandler(async (req, res) => {
   */
 });
 
+// @desc    Récupère une unité pédagogique
+// @route   GET /unite-pedagogique/:id
+// @access  Private: Enseignant
+const getUnitePedagogique = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const unitePedagogique = await neode
+    .model('UnitePedagogique')
+    .first('identifiant_unite_pedagogique', parseInt(id));
+  if (!unitePedagogique) {
+    res.status(404);
+    throw new Error('Unité pédagogique non reconnue');
+  }
+  res.json(await unitePedagogique.toJson());
+});
+
 module.exports = {
   getAllUnitePedagogiqueByModuleFormation,
   updateUnitePedagogique,
   deleteUnitePedagogique,
+  getUnitePedagogique,
 };

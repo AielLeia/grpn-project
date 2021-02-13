@@ -60,6 +60,26 @@ describe("Point d'entrée des modules de fomation", () => {
     });
   });
 
+  it('GET /api-graph/unite-pedagogique/:id', async () => {
+    const res = await request(app).get(`${URL}/unite-pedagogique/1`);
+    expect(res.statusCode).toEqual(200);
+    const { body } = res;
+    expect(body).toMatchObject({
+      identifiant_unite_pedagogique: 1,
+      nom: 'Chapitre 1 - Introduction',
+      url_resource: 'http://site-partage.com/chapitre-1.pdf',
+    });
+  });
+
+  it('GET /api-graph/unite-pedagogique/:id avec un identifiant non présent dans la base de donnée', async () => {
+    const res = await request(app).get(`${URL}/unite-pedagogique/4654654`);
+    expect(res.statusCode).toEqual(404);
+    const { body } = res;
+    expect(body).toMatchObject({
+      message: 'Unité pédagogique non reconnue',
+    });
+  });
+
   it('PUT /api-graph/unite-pedagogique/:id', async () => {
     const res = await request(app)
       .put(`${URL}/unite-pedagogique/1`)
