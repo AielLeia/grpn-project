@@ -118,9 +118,72 @@ const getUnitePedagogique = asyncHandler(async (req, res) => {
   res.json(await unitePedagogique.toJson());
 });
 
+// @desc    Ajoute une nouvelle unité pédagogique
+// @warn    L'ajout d'une unité pédagogique ne se fait qu'a la fin d'une chaine
+// @route   POST /unite-pedagogique
+// @access  Private: Enseignant
+const addUnitePedagogique = asyncHandler(async (req, res) => {
+  const {
+    unitePedagogique: { identifiant_unite_pedagogique, nom, url },
+    identifiant_unite_pedagogique_precedent,
+    isFirst,
+    identifiant_module_formation,
+  } = req.body;
+  let unitePedagogiquePrecedent = null;
+  let moduleFormation = null;
+  if (!isFirst) {
+    unitePedagogiquePrecedent = await neode
+      .model('UnitePedagogique')
+      .first(
+        'identifiant_unite_pedagogique',
+        parseInt(identifiant_unite_pedagogique_precedent)
+      );
+    if (!unitePedagogiquePrecedent) {
+      res.status(404);
+      throw new Error("Impossible de créer l'unité pédagogique");
+    }
+  } else {
+    moduleFormation = await neode
+      .model('ModuleFormation')
+      .first(
+        'identifiant_module_formation',
+        parseInt(identifiant_module_formation)
+      );
+    if (!moduleFormation) {
+      res.status(404);
+      throw new Error("Impossible de créer l'unité pédagogique");
+    }
+  }
+  const newUnitePedagogique = await neode.model('UnitePedagogique').create({
+    identifiant_unite_pedagogique,
+    nom,
+    url_resource: url,
+  });
+  let relation;
+  if (unitePedagogiquePrecedent !== null) {
+    relation = await unitePedagogiquePrecedent.relateTo(
+      newUnitePedagogique,
+      'suis',
+      {
+        identifiant_unite_pedagogique_suivant: newUnitePedagogique.get('id'),
+      }
+    );
+  } else {
+    relation = await moduleFormation.relateTo(
+      newUnitePedagogique,
+      'commence_par'
+    );
+  }
+  res.json({
+    ...(await newUnitePedagogique.toJson()),
+    ...(await relation.toJson()),
+  });
+});
+
 module.exports = {
   getAllUnitePedagogiqueByModuleFormation,
   updateUnitePedagogique,
   deleteUnitePedagogique,
   getUnitePedagogique,
+  addUnitePedagogique,
 };

@@ -4,9 +4,12 @@ const {
   updateUnitePedagogique,
   deleteUnitePedagogique,
   getUnitePedagogique,
+  addUnitePedagogique,
 } = require('../controllers');
 
 const router = express.Router();
+
+router.route('/').post(addUnitePedagogique);
 
 router
   .route('/:id/par-module-formation')
