@@ -7,7 +7,7 @@
     "start": "npm run seeder:dev; nodemon server.js",
     "seeder": "node seeder.js",
     "seeder:dev": "cross-env NODE_ENV=developpement node seeder.js",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit --verbose --runInBand",
     "pretest": "cross-env NODE_ENV=test npm run seeder"
   },
   "author": "Ismaël MOHAMED BOUH",

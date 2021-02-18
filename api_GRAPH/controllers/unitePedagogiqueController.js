@@ -175,8 +175,12 @@ const addUnitePedagogique = asyncHandler(async (req, res) => {
     );
   }
   res.json({
-    ...(await newUnitePedagogique.toJson()),
-    ...(await relation.toJson()),
+    noeud: { ...(await newUnitePedagogique.toJson()) },
+    relation: {
+      type: relation.type(),
+      to: relation.endNode().properties(),
+      from: relation.startNode().properties(),
+    },
   });
 });
 

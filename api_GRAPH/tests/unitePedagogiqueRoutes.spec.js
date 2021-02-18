@@ -134,4 +134,87 @@ describe("Point d'entrée des modules de fomation", () => {
       message: 'Unité pédagogique non reconnue',
     });
   });
+
+  it("POST /api-graph/unite-pedagogique/ Création d'une unité pédagogique et l'ajouter dans une liste", async () => {
+    const res = await request(app)
+      .post(`${URL}/unite-pedagogique`)
+      .send({
+        unitePedagogique: {
+          identifiant_unite_pedagogique: 19,
+          nom: 'Chapitre 8 - Etat chimique',
+          url: 'http://site-partage.com/chapitre-8.pdf',
+        },
+        identifiant_unite_pedagogique_precedent: 7,
+        isFirst: false,
+        identifiant_module_formation: 1,
+      });
+    expect(res.statusCode).toEqual(200);
+    const { body } = res;
+    expect(body).toMatchObject({
+      noeud: {
+        identifiant_unite_pedagogique: 19,
+        nom: 'Chapitre 8 - Etat chimique',
+        url_resource: 'http://site-partage.com/chapitre-8.pdf',
+      },
+      relation: {
+        type: 'SUIS',
+        to: {
+          identifiant_unite_pedagogique: 19,
+          nom: 'Chapitre 8 - Etat chimique',
+          url_resource: 'http://site-partage.com/chapitre-8.pdf',
+        },
+        from: {
+          identifiant_unite_pedagogique: 7,
+          nom: 'Chapitre 7 - Les transformations chimiques',
+          url_resource: 'http://site-partage.com/chapitre-7.pdf',
+        },
+      },
+    });
+  });
+
+  it("POST /api-graph/unite-pedagogique/ Création d'une prémière unité pédagogique", async () => {
+    await request(app)
+      .post(`${URL}/module-formation`)
+      .send({
+        moduleFormation: {
+          nom: 'Histoire-Géographie',
+          identifiant_module_formation: 4,
+        },
+        niveauFormation: {
+          nom: 'Terminal',
+        },
+      });
+    const res = await request(app)
+      .post(`${URL}/unite-pedagogique`)
+      .send({
+        unitePedagogique: {
+          identifiant_unite_pedagogique: 19,
+          nom: 'Chapitre 1 - Première Guerre Mondial',
+          url: 'http://site-partage.com/chapitre-1.pdf',
+        },
+        isFirst: true,
+        identifiant_module_formation: 4,
+      });
+    expect(res.statusCode).toEqual(200);
+    const { body } = res;
+    expect(body).toMatchObject({
+      noeud: {
+        identifiant_unite_pedagogique: 19,
+        nom: 'Chapitre 1 - Première Guerre Mondial',
+        url_resource: 'http://site-partage.com/chapitre-1.pdf',
+      },
+      relation: {
+        type: 'COMMENCE_PAR',
+        to: {
+          identifiant_unite_pedagogique: 19,
+          nom: 'Chapitre 1 - Première Guerre Mondial',
+          url_resource: 'http://site-partage.com/chapitre-1.pdf',
+        },
+        from: {
+          nom: 'Histoire-Géographie',
+        },
+      },
+    });
+    await request(app).delete(`${URL}/module-formation/4`);
+  });
 });
