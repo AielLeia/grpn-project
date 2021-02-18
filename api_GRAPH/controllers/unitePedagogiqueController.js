@@ -184,10 +184,19 @@ const addUnitePedagogique = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Recupère tout les unités pédagogiques
+// @route   GET /unite-pedagogique
+// @access  Private: Enseignant
+const getAllUnitePedagogique = asyncHandler(async (req, res) => {
+  const result = await neode.model('UnitePedagogique').all();
+  res.json([...(await result.toJson())]);
+});
+
 module.exports = {
   getAllUnitePedagogiqueByModuleFormation,
   updateUnitePedagogique,
   deleteUnitePedagogique,
   getUnitePedagogique,
   addUnitePedagogique,
+  getAllUnitePedagogique,
 };

@@ -5,11 +5,12 @@ const {
   deleteUnitePedagogique,
   getUnitePedagogique,
   addUnitePedagogique,
+  getAllUnitePedagogique,
 } = require('../controllers');
 
 const router = express.Router();
 
-router.route('/').post(addUnitePedagogique);
+router.route('/').post(addUnitePedagogique).get(getAllUnitePedagogique);
 
 router
   .route('/:id/par-module-formation')

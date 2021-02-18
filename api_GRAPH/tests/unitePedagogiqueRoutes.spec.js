@@ -49,6 +49,13 @@ describe("Point d'entrée des modules de fomation", () => {
     }
   });
 
+  it('GET /api-graph/unite-pedagogique', async () => {
+    const res = await request(app).get(`${URL}/unite-pedagogique`);
+    expect(res.statusCode).toEqual(200);
+    const { body } = res;
+    expect(body).toBeDefined();
+  });
+
   it("GET /api-graph/unite-pedagogique/:id/par-module-formation n'existe pas", async () => {
     const res = await request(app).get(
       `${URL}/unite-pedagogique/546546/par-module-formation`
