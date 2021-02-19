@@ -21,14 +21,13 @@ const connection = mysql.createConnection({
   } 
 
    // Decrypt
-  const motDePasseDeCrypter  =(motDePasse) => 
-  {
-    const resultatDecrypt=  CryptoJS.AES.decrypt(motDePasse, 'test123');
-    console.log(resultat);
-     const resultatFinal= resultatDecrypt.toString(CryptoJS.enc.Utf8);
-     console.log(resultatFinal);
-     return resultatFinal;
-}
+const motDePasseDeCrypter=  (ciphertext) => {
+  const res = CryptoJS.AES.decrypt(ciphertext, 'test123');
+  var resultat = res.toString(CryptoJS.enc.Utf8);
+  console.log(resultat);
+  return resultat;
+ }
+
 
 
 
@@ -37,16 +36,23 @@ const connection = mysql.createConnection({
 router.post('/login/Connexion', function(req, res) {
     console.log("post appelé pour l'authentification");
     console.log(req.body);
-    connection.query('SELECT pseudo , motdepasse FROM Compte where pseudo = ? and motDePasse = ?;'
-    ,[req.body.pseudo, motDePasseEncrypter(req.body.motDePasse) ], 
+    connection.query('SELECT motDePasse FROM Compte where pseudo = ? ;'
+    ,[req.body.pseudo ], 
         function (err, result) {
             if (err) throw err;
             if (result.length <= 0) {
               console.log('Veuillez vérifier votre pseudo ou de mot de passe ');
               res.json({ Connexion: 'Veuillez vérifier votre pseudo ou de mot de passe ' });
             }else{
-              console.log('Compte connnecté');
-              res.json({ Connexion: 'ok' });
+              
+              if(motDePasseDeCrypter(result[0].motDePasse)==req.body.motDePasse){
+                console.log('Compte connnecté');
+                res.json({ Connexion: 'ok' });
+              }else{
+                console.log('Veuillez vérifier votre pseudo ou de mot de passe ');
+              res.json({ Connexion: 'Veuillez vérifier votre pseudo ou de mot de passe ' });
+              }
+              
             }
             
           });
