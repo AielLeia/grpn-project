@@ -127,7 +127,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UnitePedagogique'
-  /api-graph/unite-pedagogique/:id:
+  /unite-pedagogique/:id:
     put:
       tags:
         - Unité Pédagogique
@@ -176,6 +176,86 @@ paths:
                             type: string
                           from:
                             type: string
+    get:
+      tags:
+        - Unité Pédagogique
+      summary: Récupération d'une unité pédagogique
+      parameters:
+        - in: query
+          name: id
+          description: Identifiant d'une unité pédagogique
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Unité pédagogique présente dans la base de donnée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnitePedagogique'
+
+  /unite-pedagogique:
+    post:
+      tags:
+        - Unité Pédagogique
+      summary: Ajoute d'une nouvelle unité pédagogique
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                unitePedagogique:
+                  type: object
+                  properties:
+                    identifiant_unite_pedagogique:
+                      type: number
+                    nom:
+                      type: string
+                    url:
+                      type: string
+                identifiant_unite_pedagogique_precedent:
+                  type: string
+                isFirst:
+                  type: boolean
+                identifiant_module_formation:
+                  type: number
+      responses:
+        '201':
+          description: Création d'un nouveau module de formation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  neoud:
+                    $ref: '#/components/schemas/UnitePedagogique'
+                  relation:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      to:
+                        $ref: '#/components/schemas/UnitePedagogique'
+                      from:
+                        oneOf:
+                          - $ref: '#/components/schemas/ModuleFormation'
+                          - $ref: '#/components/schemas/UnitePedagogique'
+    get:
+      tags:
+        - Unité Pédagogique
+      summary: Récupération de tout les unité pédagogique
+      responses:
+        '200': # status code
+          description: Tout les unités pédagogiques non ordonnée
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnitePedagogique'
 
 components:
   schemas:
