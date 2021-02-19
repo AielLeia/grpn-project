@@ -1,9 +1,6 @@
-/**
-
-*/
-
 const request = require('supertest');
 const app = require('../app');
+const { execSync } = require('child_process');
 
 const URL = '/api-graph';
 
@@ -35,6 +32,9 @@ expect.extend({
 });
 
 describe("Point d'entrée des chaines descriptives", () => {
+  beforeAll(() => {
+    execSync('node seeder.js');
+  });
   it('GET /api-graph/chaine-descriptive', async () => {
     const res = await request(app).get(`${URL}/chaine-descriptive`);
     expect(res.statusCode).toEqual(200);

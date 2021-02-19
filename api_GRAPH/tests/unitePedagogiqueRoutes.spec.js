@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
+const { execSync } = require('child_process');
 
 const URL = '/api-graph';
 
@@ -31,6 +32,9 @@ expect.extend({
 });
 
 describe("Point d'entrée des modules de fomation", () => {
+  beforeAll(() => {
+    execSync('node seeder.js');
+  });
   it('GET /api-graph/unite-pedagogique/:id/par-module-formation', async () => {
     const res = await request(app).get(
       `${URL}/unite-pedagogique/1/par-module-formation`
