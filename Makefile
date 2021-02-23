@@ -21,7 +21,7 @@ gen\:env\:neo4j:
 gen\:env\:mariadb:
 	@echo ===== Generation des variables d'environnement pour l'API MariaDB =====
 	@echo HOST=localhost > api_BDR/.env
-	@echo USER=root >> api_BDR/.env
+	@echo DB_USERNAME=root >> api_BDR/.env
 	@echo PASSWORD=root >> api_BDR/.env
 	@echo DATABASE=FormationBD >> api_BDR/.env
 	@echo PORT=8889 >> api_BDR/.env
