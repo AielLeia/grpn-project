@@ -2,13 +2,13 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "PT Sans", sans-serif;
+  font-family: 'PT Sans', sans-serif;
+  color: white;
 }
 
 .connexion,
 .home,
 .contact-us {
-  display: flex;
   height: 90vh;
   align-items: center;
   justify-content: center;
@@ -16,19 +16,19 @@
 }
 
 .home {
-  background: url("./images/img-1.jpg") no-repeat fixed right/cover;
+  background: url('./images/img-1.jpg') no-repeat fixed right/cover;
   height: calc(100vh - 80px);
   overflow: hidden;
 }
 
 .connexion {
-  background: url("./images/img-2.jpg") no-repeat fixed right/cover;
+  background: url('./images/img-2.jpg') no-repeat fixed right/cover;
   height: calc(100vh - 80px);
   overflow: hidden;
 }
 
 .contact-us {
-  background: url("./images/img-3.jpg") no-repeat fixed right/cover;
+  background: url('./images/img-3.jpg') no-repeat fixed right/cover;
   height: calc(100vh - 80px);
   overflow: hidden;
 }

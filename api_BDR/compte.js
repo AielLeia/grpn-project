@@ -43,7 +43,7 @@ router.post('/login/Connexion', function (req, res) {
           Connexion: 'Veuillez vérifier votre pseudo ou de mot de passe ',
         });
       } else {
-        if (motDePasseDeCrypter(result[0].motDePasse) == req.body.motDePasse) {
+        if (result[0].motDePasse == req.body.motDePasse) {
           console.log('Compte connnecté');
           res.json({ Connexion: 'ok' });
         } else {
