@@ -25,28 +25,40 @@ gen\:env\:mariadb:
 	@echo PASSWORD=root >> api_BDR/.env
 	@echo DATABASE=FormationBD >> api_BDR/.env
 	@echo PORT=8889 >> api_BDR/.env
+	@echo APP_PORT=3000 >> api_BDR/.env
 
 gen\:env: gen\:env\:neo4j gen\:env\:mariadb
 
 ## ===============================================================================
 ## Commande permettant de lancé l'installation des dépendances des APIs.
 ## ===============================================================================
-install\:neo4j: gen\:env\:neo4j
+install\:neo4j:
 	@npm install -C api_GRAPH/
 
-install\:mariadb: gen\:env\:mariadb
+install\:mariadb:
 	@npm install -C api_BDR/
 
 install: install\:mariadb install\:neo4j 
 
 ## ===============================================================================
-## Commande pour générer des fichiers d'environnement.
+## Commande pour le remplissages des données dans la base de données
+## ===============================================================================
+db\:neo4j: install\:neo4j
+	@npm run seeder -C api_GRAPH/
+
+db\:mariadb: install\:mariadb
+	@npm run seeder -C api_BDR/
+
+db: db\:neo4j db\:mariadb
+
+## ===============================================================================
+## Commande pour les lancements des apis
 ## ===============================================================================
 run\:neo4j: install\:neo4j
 	@npm start -C api_GRAPH/
 
 run\:mariadb: install\:mariadb
-	@npm start -C api_GRAPH/ 
+	@npm start -C api_BDR/ 
 
 ## ===============================================================================
 ## Commande regroupant tout les autres commandes.

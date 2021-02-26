@@ -4,7 +4,8 @@
   "description": "junior",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run seeder; nodemon api_mysql.js",
+    "seeder": "node seeder.js"
   },
   "author": "",
   "license": "ISC",

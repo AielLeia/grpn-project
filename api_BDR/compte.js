@@ -1,4 +1,3 @@
-require('dotenv').config();
 const mysql = require('mysql');
 const router = require('express').Router();
 var CryptoJS = require('crypto-js');
