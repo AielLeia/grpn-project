@@ -256,6 +256,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UnitePedagogique'
+  /chaine-descriptive:
+    get:
+      tags:
+        - Chaines Descriptive
+      summary: Récupération de la tout les chaine descriptive
+      responses:
+        '200':
+          description: Tout les chaines descriptive
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
 
 components:
   schemas:
