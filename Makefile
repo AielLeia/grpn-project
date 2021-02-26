@@ -15,7 +15,6 @@ gen\:env\:neo4j:
 	@echo NEO4J_DATABASE=projetsi >> api_GRAPH/.env
 	@echo NEO4J_ENCRYPTION=ENCRYPTION_OFF >> api_GRAPH/.env
 	@echo APP_PORT=5000 >> api_GRAPH/.env
-	@echo NEO4J_PROTOCOL=bolt >> api_GRAPH/.env
 	@echo NODE_ENV=development >> api_GRAPH/.env
 
 gen\:env\:mariadb:
