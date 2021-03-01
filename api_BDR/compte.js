@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const router = require('express').Router();
 var CryptoJS = require('crypto-js');
 
+
 const connection = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.DB_USERNAME,
@@ -42,7 +43,7 @@ router.post('/login/Connexion', function (req, res) {
           Connexion: 'Veuillez vérifier votre pseudo ou de mot de passe ',
         });
       } else {
-        if (result[0].motDePasse == req.body.motDePasse) {
+        if (motDePasseDeCrypter(result[0].motDePasse) == req.body.motDePasse) {
           console.log('Compte connnecté');
           res.json({ Connexion: 'ok' });
         } else {
@@ -64,7 +65,7 @@ router.get('/infosDeCompte/:pseudo', function (req, res) {
     "SELECT * FROM  Compte where pseudo = '" + req.params.pseudo + "'",
     function (error, results, fields) {
       if (error) throw error;
-      if (result.length <= 0) {
+      if (results.length <= 0) {
         res.json({ infosDeCompte: 'Veuillez vérifier le pseudo Rechercher ' });
       } else {
         res.json(results[0]);
@@ -89,7 +90,7 @@ router.post('/creationDeCompte', function (req, res) {
     function (err, result) {
       if (err) throw err;
       if (result.length <= 0) {
-        res.json({ infosDeCompte: 'Veuillez vérifier le pseudo Rechercher ' });
+        res.json({ CreationCompte: 'Veuillez vérifier le compte ' });
       } else {
         console.log('compte inséré');
         res.json({ 'Compte créé ': 'Ok' });
