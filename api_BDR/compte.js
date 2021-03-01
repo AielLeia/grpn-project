@@ -74,6 +74,28 @@ router.get('/infosDeCompte/:pseudo', function (req, res) {
   );
 });
 
+//recuperation d'un pseudo d'un compte à partir du debut d'un pseudo.
+router.get('/recupPseudo/:pseudo', function (req, res) {
+  console.log("get appelé recuperation des infos d'un compte.");
+  console.log(req.params);
+  const variable = req.params.pseudo+'%';
+  connection.query(
+    "SELECT pseudo FROM  Compte where pseudo LIKE  '"+variable+"'  ",
+    function (error, results, fields) {
+      if (error) throw error;
+      if (results.length <= 0) {
+        res.json({ infosDeCompte: 'Veuillez vérifier le pseudo Rechercher ' });
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
+
+
+
+
 //creation d'un compte dans la base de données
 router.post('/creationDeCompte', function (req, res) {
   console.log("post appelé pour la creation d'un compte");
