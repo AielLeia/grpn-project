@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './RecherchePseudo.css';
+import { withRouter } from 'react-router-dom';
 
 class RecherchePseudo extends React.Component {
 
@@ -23,7 +24,9 @@ class RecherchePseudo extends React.Component {
     const { data } = await axios.get(
       `http://localhost:7289/serveurInt/${this.state.pseudo}`
     );
-    console.log(data);
+    console.log(data); 
+    this.props.history.push('/ContactUs');
+
   }
 
   render() {
@@ -31,8 +34,8 @@ class RecherchePseudo extends React.Component {
       <div className='container recherchedupseudo'>
         <div className='lesTextes'>
         <form onSubmit={this.handleSubmit}>
-          <div className='form-group'>
-            <label>Pseudo</label>
+          <div className='form-group '>
+            <label className='lesTextes'>Rechercher un Pseudo</label>
             <input
               type='text'
               className='form-control'
@@ -49,5 +52,4 @@ class RecherchePseudo extends React.Component {
     );
   }
 }
-
-export default RecherchePseudo;
+export default withRouter(RecherchePseudo);
