@@ -18,7 +18,6 @@ app.get('/', function (req, res) {
 
 // /api-bdr/compte/login/Connexion
 app.use('/api-bdr/compte', routeCompte);
-
 app.use('/api-bdr/MF', routeMF);
 app.use('/api-bdr/NF', routeNF);
 app.use('/api-bdr/UP', routeUP);
