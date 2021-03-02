@@ -84,16 +84,13 @@ router.get('/recupPseudo/:pseudo', function (req, res) {
     function (error, results, fields) {
       if (error) throw error;
       if (results.length <= 0) {
-        res.json({ infosDeCompte: 'Veuillez vérifier le pseudo Rechercher ' });
+        res.json({ listedesPseudo: ' aucun pseudo ne matche ' });
       } else {
         res.json(results);
       }
     }
   );
 });
-
-
-
 
 
 //creation d'un compte dans la base de données
