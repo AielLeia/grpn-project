@@ -53,7 +53,16 @@ function Navbar() {
             >
               Connexion
             </Link>
-            
+          </li>
+
+          <li className='nav-item'>
+            <Link
+              to='/unite-pedagogique'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              Modules Formations
+            </Link>
           </li>
           <li className='nav-item'>
             <Link
