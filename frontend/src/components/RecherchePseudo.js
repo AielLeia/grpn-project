@@ -25,7 +25,7 @@ class RecherchePseudo extends React.Component {
       `http://localhost:7289/serveurInt/${this.state.pseudo}`
     );
     console.log(data); 
-    this.props.history.push('/ContactUs');
+    this.props.history.push('/Accueil');
 
   }
 

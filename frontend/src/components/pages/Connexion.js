@@ -1,10 +1,10 @@
 import React from 'react';
 import Forme from '../Forme';
 
-export default function Connexion() {
+export default function Connexion(props) {
   return (
     <div className='home'>
-      <Forme></Forme>
+      <Forme history={props.history}></Forme>
     </div>
   );
 }

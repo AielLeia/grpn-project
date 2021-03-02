@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 
+
 class Forme extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { pseudo: '', motDePasse: '' };
+    this.state = { pseudo: '', motDePasse: '' ,erreur: '' };
 
     this.handleChangePseudo = this.handleChangePseudo.bind(this);
     this.handleChangeMotDePasse = this.handleChangeMotDePasse.bind(this);
@@ -30,6 +31,12 @@ class Forme extends React.Component {
       }
     );
     console.log(data);
+    if(data.Connexion==='ok') {
+      this.props.history.push('/unite-pedagogique');
+    }
+    else{
+      this.setState({erreur: 'identifiant incorrecte'});
+    }
   }
 
   render() {
@@ -38,6 +45,7 @@ class Forme extends React.Component {
         className='container d-flex justify-content-between align-items-center'
         style={{ width: '400px', height: 'calc(100vh - 80px)' }}
       >
+        {this.state.erreur!=='' && <div className='alert alert-danger'>{this.state.erreur}</div>}
         <form onSubmit={this.handleSubmit}>
           <div className='form-group'>
             <label>Pseudo</label>
