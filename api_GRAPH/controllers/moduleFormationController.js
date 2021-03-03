@@ -14,6 +14,22 @@ const getAllModuleFormation = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Recupère tout les modules de formations d'un enseigant
+// @route   GET /module-formation/:id/par-enseigant
+// @access  Private: Enseignant
+const getAllModuleFormationParEnseigant = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const moduleFormationFromNeo4j = await neode.cypher(
+    'MATCH (e:Enseignant) - [:A_CREER] -> (:UnitePedagogique) <- [:COMMENCE_PAR] - (mf:ModuleFormation) WHERE e.identifiant_enseignant = $id RETURN e,mf',
+    { id: parseInt(id) }
+  );
+  const moduleFormationToArray = [];
+  for (const mf of moduleFormationFromNeo4j.records) {
+    moduleFormationToArray.push(mf.get('mf').properties);
+  }
+  res.json(moduleFormationToArray);
+});
+
 // @desc    Ajoute un nouveau module de formation et l'associe à un niveau de formation
 // @route   POST /module-formation
 // @access  Private: Enseignant
@@ -87,4 +103,5 @@ module.exports = {
   addModuleFormation,
   deleteModuleFormation,
   updateModuleFormation,
+  getAllModuleFormationParEnseigant,
 };

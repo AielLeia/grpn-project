@@ -26,6 +26,7 @@ USE FormationBD;
 --
 
 CREATE TABLE `Compte` (
+  `id` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
   `pseudo` varchar(45) NOT NULL,
   `motDePasse` varchar(256) DEFAULT NULL,
   `nom` varchar(45) DEFAULT NULL,
@@ -37,8 +38,8 @@ CREATE TABLE `Compte` (
 -- Dumping data for table `Compte`
 --
 
-INSERT INTO `Compte` (`pseudo`, `motDePasse`, `nom`, `prenom`, `adresseMail`) VALUES
-('junior', 'U2FsdGVkX18ljijOtsMGLyJ+L+PUfSBzvI3kXWSqIKQ=', 'junior', 'junior', 'juniorelengaalphonse@gmail.com');
+INSERT INTO `Compte` (`id`, `pseudo`, `motDePasse`, `nom`, `prenom`, `adresseMail`) VALUES
+(1, 'junior', 'U2FsdGVkX18ljijOtsMGLyJ+L+PUfSBzvI3kXWSqIKQ=', 'junior', 'junior', 'juniorelengaalphonse@gmail.com');
 
 -- --------------------------------------------------------
 

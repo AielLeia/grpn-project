@@ -52,6 +52,17 @@ describe("Point d'entrée des modules de fomation", () => {
     });
   });
 
+  it('GET /api-graph/module-formation/:id/par-enseignant', async () => {
+    const res = await request(app).get(
+      `${URL}/module-formation/1/par-enseignant`
+    );
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toContainObject({
+      identifiant_module_formation: 1,
+      nom: 'Physique',
+    });
+  });
+
   it('POST /api-graph/module-formation', async () => {
     const res = await request(app)
       .post(`${URL}/module-formation`)
