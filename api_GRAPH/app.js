@@ -1,5 +1,6 @@
 require('dotenv');
 const express = require('express');
+const cors = require('cors');
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 const {
   moduleFormationRoute,
@@ -10,6 +11,7 @@ const {
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/api-graph/module-formation', moduleFormationRoute);
 app.use('/api-graph/unite-pedagogique', unitePedagogiqueRoutes);

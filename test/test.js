@@ -55,6 +55,15 @@ app.get('/serveurInt/:pseudo', (req, res) => {
     .catch((err) => console.error(err));
 });
 
+app.get('/module-formation/:id/par-enseignant', async (req, res) => {
+  const { id } = req.params;
+  const response = await fetch(
+    `http://localhost:5000/api-graph/module-formation/${id}/par-enseignant`
+  );
+  const data = await response.json();
+  res.json(data);
+});
+
 //port sur lequel le front va communiquer
 const port = 7289;
 

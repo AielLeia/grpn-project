@@ -36,13 +36,14 @@ function Navbar() {
           </li>
           {userInfo ? (
             <li className='nav-item'>
-              <butoon
+              <a
+                href='#wesh'
                 style={{ cursor: 'pointer' }}
                 onClick={handleLogout}
                 className='nav-links'
               >
                 Deconnexion
-              </butoon>
+              </a>
             </li>
           ) : (
             <li className='nav-item'>
