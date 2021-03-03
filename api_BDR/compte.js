@@ -2,7 +2,6 @@ const mysql = require('mysql');
 const router = require('express').Router();
 var CryptoJS = require('crypto-js');
 
-
 const connection = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.DB_USERNAME,
@@ -78,9 +77,9 @@ router.get('/infosDeCompte/:pseudo', function (req, res) {
 router.get('/recupPseudo/:pseudo', function (req, res) {
   console.log("get appelé recuperation des infos d'un compte.");
   console.log(req.params);
-  const variable = req.params.pseudo+'%';
+  const variable = req.params.pseudo + '%';
   connection.query(
-    "SELECT pseudo FROM  Compte where pseudo LIKE  '"+variable+"'  ",
+    "SELECT pseudo FROM  Compte where pseudo LIKE  '" + variable + "'  ",
     function (error, results, fields) {
       if (error) throw error;
       if (results.length <= 0) {
@@ -91,7 +90,6 @@ router.get('/recupPseudo/:pseudo', function (req, res) {
     }
   );
 });
-
 
 //creation d'un compte dans la base de données
 router.post('/creationDeCompte', function (req, res) {

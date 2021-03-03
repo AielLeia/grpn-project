@@ -1,29 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import './Navbar.css';
-import Dropdown from './Dropdown';
+import { logout } from '../actions/loginAction';
 
 function Navbar() {
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const [click, setClick] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  const onMouseEnter = () => {
-    if (window.innerWidth < 960) {
-      setDropdown(false);
-    } else {
-      setDropdown(true);
-    }
-  };
-
-  const onMouseLeave = () => {
-    if (window.innerWidth < 960) {
-      setDropdown(false);
-    } else {
-      setDropdown(false);
-    }
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -41,29 +34,39 @@ function Navbar() {
               Home
             </Link>
           </li>
-          <li
-            className='nav-item'
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          >
-            <Link
-              to='/connexion'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Connexion
-            </Link>
-          </li>
+          {userInfo ? (
+            <li className='nav-item'>
+              <butoon
+                style={{ cursor: 'pointer' }}
+                onClick={handleLogout}
+                className='nav-links'
+              >
+                Deconnexion
+              </butoon>
+            </li>
+          ) : (
+            <li className='nav-item'>
+              <Link
+                to='/connexion'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Connexion
+              </Link>
+            </li>
+          )}
 
-          <li className='nav-item'>
-            <Link
-              to='/unite-pedagogique'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Modules Formations
-            </Link>
-          </li>
+          {userInfo && (
+            <li className='nav-item'>
+              <Link
+                to='/unite-pedagogique'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Modules Formations
+              </Link>
+            </li>
+          )}
           <li className='nav-item'>
             <Link
               to='/contact-us'

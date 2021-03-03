@@ -38,7 +38,7 @@ CREATE TABLE `Compte` (
 --
 
 INSERT INTO `Compte` (`pseudo`, `motDePasse`, `nom`, `prenom`, `adresseMail`) VALUES
-('junior', 'junior', 'junior', 'junior', 'juniorelengaalphonse@gmail.com');
+('junior', 'U2FsdGVkX18ljijOtsMGLyJ+L+PUfSBzvI3kXWSqIKQ=', 'junior', 'junior', 'juniorelengaalphonse@gmail.com');
 
 -- --------------------------------------------------------
 

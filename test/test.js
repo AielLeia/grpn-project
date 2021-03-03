@@ -19,7 +19,23 @@ app.post('/serveurInt', (req, res) => {
     headers: { 'Content-Type': 'application/json' },
   })
     .then((response) => response.json())
-    .then((data) => res.json(data));
+    .then((data) => {
+      console.log(data);
+      if (data.Connexion === 'ok') {
+        const url =
+          'http://localhost:3000/api-bdr/compte/infosDeCompte/' +
+          req.body.pseudo;
+        fetch(url)
+          .then((fetchResponse) => fetchResponse.json())
+          .then((fetchResponseData) => {
+            return res.json(fetchResponseData);
+          })
+          .catch((err) => console.error(err));
+      } else {
+        res.status(404);
+        res.json(data);
+      }
+    });
   //.then(json => console.log(json));
 });
 
