@@ -16,7 +16,6 @@ function App() {
         <Route path='/connexion' component={Connexion} />
         <Route path='/contact-us' component={ContactUs} />
         <Route path='/unite-pedagogique' component={ModuleFormation} />
-        
       </Switch>
     </Router>
   );
