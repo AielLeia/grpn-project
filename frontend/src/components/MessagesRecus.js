@@ -104,7 +104,7 @@ export default class MessageRecus extends React.Component {
               </thead>
               <tbody>
                 {this.state.messages.map((e) => (
-                  <tr className={e.lu == true ? "table-info" : "table-danger"}>
+                  <tr className={e.lu === true ? "table-info" : "table-danger"}>
                     {" "}
                     <th>{e.date}</th>
                     <th>{e.idSource}</th>

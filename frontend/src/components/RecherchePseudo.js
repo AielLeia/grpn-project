@@ -26,7 +26,7 @@ class RecherchePseudo extends React.Component {
         <div className='lesTextes'>
           <form onSubmit={this.handleSubmit}>
             <div className='form-group '>
-              <label className='lesTextes'>Rechercher un Pseudo</label>
+              <label className='lesTextes'>Rechercher les informations d'un Pseudo</label>
               <input
                 type='text'
                 className='form-control'
