@@ -7,6 +7,7 @@ import Connexion from './components/pages/Connexion';
 import ContactUs from './components/pages/ContactUs';
 import ModuleFormation from './components/pages/moduleFormation/ModuleFormation';
 import UnitePedagogique from './components/pages/unitePedagogique/UnitePedagogique';
+import AccueilRecherchePseudo from './components/pages/accueil/AccueilRecherchePseudo';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           component={UnitePedagogique}
         />
         <Route path='/unite-pedagogique' component={ModuleFormation} />
+        <Route path='/accueil' component={AccueilRecherchePseudo} />
       </Switch>
     </Router>
   );

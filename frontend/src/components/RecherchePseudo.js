@@ -4,7 +4,6 @@ import './RecherchePseudo.css';
 import { withRouter } from 'react-router-dom';
 
 class RecherchePseudo extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = { pseudo: '' };
@@ -19,34 +18,27 @@ class RecherchePseudo extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    
-
-    const { data } = await axios.get(
-      `http://localhost:7289/serveurInt/${this.state.pseudo}`
-    );
-    console.log(data); 
-    this.props.history.push('/Accueil');
-
+    this.props.history.push('/accueil?q=' + this.state.pseudo);
   }
 
   render() {
     return (
       <div className='container recherchedupseudo'>
         <div className='lesTextes'>
-        <form onSubmit={this.handleSubmit}>
-          <div className='form-group '>
-            <label className='lesTextes'>Rechercher un Pseudo</label>
-            <input
-              type='text'
-              className='form-control'
-              value={this.state.pseudo}
-              onChange={this.handleChangePseudo}
-            />
-          </div>
-          <button type='submit' className='btn btn-primary'>
-            Rechercher
-          </button>
-        </form>
+          <form onSubmit={this.handleSubmit}>
+            <div className='form-group '>
+              <label className='lesTextes'>Rechercher un Pseudo</label>
+              <input
+                type='text'
+                className='form-control'
+                value={this.state.pseudo}
+                onChange={this.handleChangePseudo}
+              />
+            </div>
+            <button type='submit' className='btn btn-primary'>
+              Rechercher
+            </button>
+          </form>
         </div>
       </div>
     );
