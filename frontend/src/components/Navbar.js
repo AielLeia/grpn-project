@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import './Navbar.css';
-import { logout } from '../actions/loginAction';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import "./Navbar.css";
+import { logout } from "../actions/loginAction";
 
-function Navbar() {
+function Navbar(props) {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userInfo, nbMessages } = userLogin;
 
   const [click, setClick] = useState(false);
 
@@ -17,39 +17,65 @@ function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
+    props.history.push("/");
   };
 
   return (
     <>
-      <nav className='navbar'>
+      <nav className="navbar">
         {/* <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
           MPIEL
         </Link> */}
-        <div className='menu-icon' onClick={handleClick}>
-          <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+        <div className="menu-icon" onClick={handleClick}>
+          <i className={click ? "fas fa-times" : "fas fa-bars"} />
         </div>
-        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-          <li className='nav-item'>
-            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+        <ul className={click ? "nav-menu active" : "nav-menu"}>
+          <li className="nav-item">
+            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
               Home
             </Link>
           </li>
+
+          {userInfo && (
+            <li className="nav-item">
+              <Link
+                to="/EnvoyerMessage"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Messages
+              </Link>
+            </li>
+          )}
+
+          {userInfo && (
+            <li className="nav-item">
+              <Link
+                to="/MessagesRecus"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Messages recus{" "}
+                <strong style={{ color: "red" }}>{nbMessages}</strong>
+              </Link>
+            </li>
+          )}
           {userInfo ? (
-            <li className='nav-item'>
+            <li className="nav-item">
               <a
-                href='#wesh'
-                style={{ cursor: 'pointer' }}
+                href="#wesh"
+                style={{ cursor: "pointer" }}
                 onClick={handleLogout}
-                className='nav-links'
+                className="nav-links"
               >
                 Deconnexion
               </a>
             </li>
           ) : (
-            <li className='nav-item'>
+            <li className="nav-item">
               <Link
-                to='/connexion'
-                className='nav-links'
+                to="/connexion"
+                className="nav-links"
                 onClick={closeMobileMenu}
               >
                 Connexion
@@ -58,20 +84,20 @@ function Navbar() {
           )}
 
           {userInfo && (
-            <li className='nav-item'>
+            <li className="nav-item">
               <Link
-                to='/unite-pedagogique'
-                className='nav-links'
+                to="/unite-pedagogique"
+                className="nav-links"
                 onClick={closeMobileMenu}
               >
                 Modules Formations
               </Link>
             </li>
           )}
-          <li className='nav-item'>
+          <li className="nav-item">
             <Link
-              to='/contact-us'
-              className='nav-links'
+              to="/contact-us"
+              className="nav-links"
               onClick={closeMobileMenu}
             >
               Contact Us

@@ -13,7 +13,7 @@ const { URL, URLSearchParams } = require('url');
 app.post('/serveurInt', (req, res) => {
   //console.log(req.body);
   const body = { pseudo: req.body.pseudo, motDePasse: req.body.motDePasse };
-  fetch('http://localhost:3000/api-bdr/compte/login/Connexion', {
+  fetch('http://localhost:4001/api-bdr/compte/login/Connexion', {
     method: 'post',
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },
@@ -23,7 +23,7 @@ app.post('/serveurInt', (req, res) => {
       console.log(data);
       if (data.Connexion === 'ok') {
         const url =
-          'http://localhost:3000/api-bdr/compte/infosDeCompte/' +
+          'http://localhost:4001/api-bdr/compte/infosDeCompte/' +
           req.body.pseudo;
         fetch(url)
           .then((fetchResponse) => fetchResponse.json())
