@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import './ModuleFormation.css';
 import src from './ARC-physics-940x529.jpg';
+import { Link } from 'react-router-dom';
 
 function ModuleFormation({ history }) {
   const [moduleFormations, setModuleFormation] = useState([]);
@@ -32,9 +33,12 @@ function ModuleFormation({ history }) {
               <div className='col-sm-7'>
                 <div className='card-block'>
                   <p className='title'>{mf.nom}</p>
-                  <a href='#wesh' className='btn btn-primary'>
+                  <Link
+                    to={`/unite-pedagogique/${mf.identifiant_module_formation}/par-module-formation`}
+                    className='btn btn-primary'
+                  >
                     Unité Pédagogiques
-                  </a>
+                  </Link>
                 </div>
               </div>
 

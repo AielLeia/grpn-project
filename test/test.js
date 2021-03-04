@@ -64,6 +64,15 @@ app.get('/module-formation/:id/par-enseignant', async (req, res) => {
   res.json(data);
 });
 
+app.get('/unite-pedagogique/:id/par-module-formation', async (req, res) => {
+  const { id } = req.params;
+  const response = await fetch(
+    `http://localhost:5000/api-graph/unite-pedagogique/${id}/par-module-formation`
+  );
+  const data = await response.json();
+  res.json(data);
+});
+
 //port sur lequel le front va communiquer
 const port = 7289;
 

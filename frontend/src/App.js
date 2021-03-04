@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Connexion from './components/pages/Connexion';
 import ContactUs from './components/pages/ContactUs';
 import ModuleFormation from './components/pages/moduleFormation/ModuleFormation';
+import UnitePedagogique from './components/pages/unitePedagogique/UnitePedagogique';
 
 function App() {
   return (
@@ -15,6 +16,10 @@ function App() {
         <Route path='/' exact component={Home} />
         <Route path='/connexion' component={Connexion} />
         <Route path='/contact-us' component={ContactUs} />
+        <Route
+          path='/unite-pedagogique/:id/par-module-formation'
+          component={UnitePedagogique}
+        />
         <Route path='/unite-pedagogique' component={ModuleFormation} />
       </Switch>
     </Router>
