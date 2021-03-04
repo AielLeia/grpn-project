@@ -44,7 +44,6 @@ export default class MessageRecus extends React.Component {
     });
   }
   lireMessage(id) {
-    localStorage.setItem("userInfo", localStorage.getItem("userInfo"));
     var api = "http://localhost:3000/lireMessage/" + id;
     fetch(api, {
       method: "get",

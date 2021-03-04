@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./Navbar.css";
-import { logout } from "../actions/loginAction";
+import { logout, nbrMessages } from "../actions/loginAction";
 
 function Navbar(props) {
+  const [nbmessages, setNbmessages] = useState(0);
+
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo, nbMessages } = userLogin;
+  const { userInfo } = userLogin;
 
   const [click, setClick] = useState(false);
 
@@ -19,7 +21,32 @@ function Navbar(props) {
     dispatch(logout());
     props.history.push("/");
   };
+  const nbMessages = () => {
+    var pseudo = JSON.parse(localStorage.getItem("userInfo"));
+    if (pseudo != null) {
+      console.log("bonjouuuur");
+      console.log(pseudo);
+      var api = "http://localhost:3000/nbMessagesNonLus/" + pseudo.pseudo;
+      return fetch(api, {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        return response.json().then((r) => {
+          console.log(r);
+          setNbmessages(r.res);
+        });
+      });
+    }
+  };
 
+  // Similaire à componentDidMount et componentDidUpdate :
+  useEffect(() => {
+    nbMessages();
+    console.log(nbmessages);
+  });
   return (
     <>
       <nav className="navbar">
@@ -56,7 +83,7 @@ function Navbar(props) {
                 onClick={closeMobileMenu}
               >
                 Messages recus{" "}
-                <strong style={{ color: "red" }}>{nbMessages}</strong>
+                <strong style={{ color: "red" }}>{nbmessages}</strong>
               </Link>
             </li>
           )}
