@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import './RecherchePseudo.css';
 import { withRouter } from 'react-router-dom';
 
