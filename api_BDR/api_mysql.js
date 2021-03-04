@@ -22,7 +22,7 @@ app.use('/api-bdr/MF', routeMF);
 app.use('/api-bdr/NF', routeNF);
 app.use('/api-bdr/UP', routeUP);
 
-const port = process.env.APP_PORT || 4001;
+const port = process.env.APP_PORT || 3001;
 app.listen(port, () => {
   console.log(
     'le serveur fonctionne pour l"API mariadb fonctionne sur le port : ' + port

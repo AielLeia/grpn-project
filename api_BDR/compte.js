@@ -61,7 +61,7 @@ router.get('/infosDeCompte/:pseudo', function (req, res) {
   console.log("get appelé recuperation des infos d'un compte.");
   console.log(req.params);
   connection.query(
-    "SELECT * FROM  Compte where pseudo = '" + req.params.pseudo + "'",
+    "SELECT id, pseudo, nom, prenom, adresseMail FROM  Compte where pseudo = '" + req.params.pseudo + "'",
     function (error, results, fields) {
       if (error) throw error;
       if (results.length <= 0) {
