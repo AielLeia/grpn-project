@@ -27,4 +27,31 @@ router.get('/listeUP', function (req, res) {
   );
 });
 
+//unite-pedagogique a creer 
+router.post('/creationUnitePedagogique/', function (req, res) {
+  console.log("post appelé pour la creation d'un UP");
+  console.log(req.body);
+  const id = Math.floor(Math.random() * 1000) + 2;
+  connection.query(
+    'INSERT INTO `UnitePedagogique` (`idUP`, `nomUP`, `Compte_pseudo`) values ( "'+id+'",?,?);',
+    [
+      req.body.nomUP,
+      req.body.Compte_pseudo,
+    ],
+    function (err, result) {
+      if (err) throw err;
+      console.log();
+      if (result.length <= 0) {
+        res.json({ CreationCompte: 'Veuillez vérifier le UnitePedagogique ' });
+      } else {
+        console.log('UnitePedagogique inséré');
+        res.json({ 'UnitePedagogique ': 'Ok' });
+      }
+    }
+  );
+
+  
+});
+
+
 module.exports = router;
