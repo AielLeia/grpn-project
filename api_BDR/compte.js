@@ -91,6 +91,37 @@ router.get('/recupPseudo/:pseudo', function (req, res) {
   );
 });
 
+
+
+//existance d'un pseudo.
+router.post('/existance', function (req, res) {
+  console.log("post appelé pour l'authentification");
+  console.log(req.body);
+  connection.query(
+    'SELECT pseudo FROM Compte where pseudo = ? ;',
+    [req.body.pseudo],
+    function (err, result) {
+      if (err) throw err;
+      if (result.length <= 0) {
+        console.log('Veuillez vérifier votre pseudo  ');
+        res.json({
+          pseudo: 'echec',
+        });
+      } else {
+        if (result[0].pseudo == req.body.pseudo) {
+          console.log('pseudo ok');
+          res.json({ pseudo: 'ok' });
+        } else {
+          console.log('Veuillez vérifier votre pseudo  ');
+          res.json({
+            pseudo: 'echec',
+          });
+        }
+      }
+    }
+  );
+});
+
 //creation d'un compte dans la base de données
 router.post('/creationDeCompte', function (req, res) {
   console.log("post appelé pour la creation d'un compte");
